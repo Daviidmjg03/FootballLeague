@@ -1,0 +1,60 @@
+﻿@model ProjectLigaNosWeb.Data.Entities.Statistics
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Statistics</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Club.Name) 
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Club.Name)  
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MatchesPlayed)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MatchesPlayed)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OverallRanking)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OverallRanking)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GoalsScored)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GoalsScored)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GoalsConceded)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GoalsConceded)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HomeWins)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HomeWins)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AwayWins)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AwayWins)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,139 @@
+﻿@model IEnumerable<ProjectLigaNosWeb.Data.Entities.Clubs>
+
+@{
+    ViewData["Title"] = "Clubs List";
+}
+
+<style>
+    .table {
+        width: 100%;
+        margin: 20px 0;
+        border-collapse: collapse;
+        border-radius: 8px; 
+        overflow: hidden; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    }
+
+    .table thead {
+        background-color: #0056b3;
+        color: white;
+    }
+
+    .table th, .table td {
+        padding: 12px 15px;
+        text-align: left;
+    }
+
+    .table tbody tr {
+        background-color: #f9f9f9; 
+        transition: background-color 0.3s ease; 
+    }
+
+    .table tbody tr:hover {
+        background-color: #e0e0e0; 
+    }
+
+    .table a {
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        display: inline-block; 
+    }
+
+    .create-new-button {
+        background-color: #28a745; 
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px; 
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .create-new-button:hover {
+        background-color: #218838; 
+    }
+
+    .edit-club-btn {
+        background-color: #007bff; 
+        color: white;
+    }
+
+    .edit-club-btn:hover {
+        background-color: #0056b3; 
+    }
+
+    .details-club-btn {
+        background-color: #17a2b8; 
+        color: white;
+    }
+
+    .details-club-btn:hover {
+        background-color: #138496; 
+    }
+
+    .remove-club-btn {
+        background-color: #dc3545; 
+        color: white;
+    }
+
+    .remove-club-btn:hover {
+        background-color: #c82333; 
+        animation: pulse 0.3s ease;
+    }
+
+ 
+</style>
+
+<h1>Clubs</h1>
+
+<p>
+    <a asp-action="Create" class="create-new-button">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.First().Name)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Acroyn)</th>
+            <th>@Html.DisplayNameFor(model => model.First().DateFund)</th>
+            <th>@Html.DisplayNameFor(model => model.First().ImageId)</th>
+            <th>@Html.DisplayNameFor(model => model.First().City)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Country)</th>
+            <th>@Html.DisplayNameFor(model => model.First().CapacityStadium)</th>
+            <th>@Html.DisplayNameFor(model => model.First().President)</th>
+            <th>@Html.DisplayNameFor(model => model.First().NationalTitles)</th>
+            <th>@Html.DisplayNameFor(model => model.First().InternationalTitles)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Acroyn)</td>
+                <td>@Html.DisplayFor(modelItem => item.DateFund)</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImageFullPath))
+                    {
+                        <img src="@Url.Content(item.ImageFullPath)" alt="Image" style="width:100px;height:150px;max-width:100%;height:auto" />
+                    }
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.City)</td>
+                <td>@Html.DisplayFor(modelItem => item.Country)</td>
+                <td>@Html.DisplayFor(modelItem => item.CapacityStadium)</td>
+                <td>@Html.DisplayFor(modelItem => item.President)</td>
+                <td>@Html.DisplayFor(modelItem => item.NationalTitles)</td>
+                <td>@Html.DisplayFor(modelItem => item.InternationalTitles)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="edit-club-btn">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="details-club-btn">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="remove-club-btn">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

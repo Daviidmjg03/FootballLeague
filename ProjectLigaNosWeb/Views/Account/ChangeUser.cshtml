@@ -1,0 +1,197 @@
+﻿@model ProjectLigaNosWeb.Models.ChangeUserViewModel
+@{
+    ViewData["Title"] = "ChangeUser";
+}
+
+<style>
+    body {
+        background-color: #e9ecef;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #495057;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #343a40;
+        font-size: 2em;
+    }
+
+    .row {
+        margin-top: 20px;
+    }
+
+    .col-md-4 {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #007bff;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .form-control {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 10px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        width: 100%;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+    .btn {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 48%;
+        margin-right: 2%;
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    .text-warning {
+        font-size: 0.9em;
+        color: #dc3545;
+    }
+
+    #profileImage {
+        display: block;
+        margin: 10px auto;
+        border-radius: 50%;
+        border: 2px solid #007bff;
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+        #profileImage:hover {
+            transform: scale(1.1);
+        }
+
+    .text-success {
+        text-align: center;
+        margin-top: 10px;
+        color: #28a745;
+    }
+</style>
+
+<h1>ChangeUser</h1>
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <form method="post" enctype="multipart/form-data" id="changeUserForm">
+            <div asp-validation-summary="ModelOnly"></div>
+
+            <div class="form-group position-relative">
+                <label asp-for="FirstName">First Name</label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-warning"></span>
+
+                @if (!string.IsNullOrEmpty(Model.ProfilePicturePath))
+                {
+                    <img src="@Model.ProfilePicturePath" alt="Profile Picture"
+                         style="max-width: 80px; max-height: 80px; position: absolute; top: -50px; right: 10px; border-radius: 50%;" id="profileImage" />
+                }
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LastName">Last Name</label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-warning"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address">Address</label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-warning"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PostalCode">Postal Code</label>
+                <input asp-for="PostalCode" class="form-control" />
+                <span asp-validation-for="PostalCode" class="text-warning"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PhoneNumber">Phone Number</label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-warning"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProfilePicture">Profile Picture</label>
+                <input asp-for="ProfilePicture" type="file" class="form-control" accept="image/*" id="uploadImage" />
+                <span asp-validation-for="ProfilePicture" class="text-warning"></span>
+            </div>
+
+            <div class="text-success">@ViewBag.UserMessage</div>
+
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                <a asp-action="ChangePassword" class="btn btn-success">Change Password</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.getElementById('uploadImage').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('profileImage').src = e.target.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('changeUserForm').addEventListener('submit', function (event) {
+            const fileInput = document.getElementById('uploadImage');
+            if (fileInput.files.length === 0) {
+                event.preventDefault();
+                alert('Please select a profile image before updating.');
+            }
+        });
+    </script>
+}

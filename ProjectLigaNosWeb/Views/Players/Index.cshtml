@@ -1,0 +1,146 @@
+﻿@model IEnumerable<ProjectLigaNosWeb.Models.PlayerViewModel>
+
+@{
+    ViewData["Title"] = "Players List";
+}
+
+<style>
+    .table {
+        width: 100%;
+        margin: 20px 0;
+        border-collapse: collapse;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+        .table thead {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .table th, .table td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        .table img {
+            max-width: 50px;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .table tbody tr {
+            background-color: #f9f9f9;
+            transition: background-color 0.3s ease;
+        }
+
+            .table tbody tr:hover {
+                background-color: #e0e0e0;
+            }
+
+        .table a {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+
+    .create-player-btn {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+        .create-player-btn:hover {
+            background-color: #218838;
+        }
+
+    .edit-player-btn {
+        background-color: #007bff;
+        color: white;
+    }
+
+        .edit-player-btn:hover {
+            background-color: #0056b3;
+        }
+
+    .details-player-btn {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+        .details-player-btn:hover {
+            background-color: #138496;
+        }
+
+    .remove-player-btn {
+        background-color: #dc3545;
+        color: white;
+    }
+
+        .remove-player-btn:hover {
+            background-color: #c82333;
+            animation: pulse 0.3s ease;
+        }
+</style>
+
+<div>
+    <a asp-action="Create" class="create-player-btn">Create New</a>
+</div>
+
+<h1>Players</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Photo</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Date of Birth</th>
+            <th>Position</th>
+            <th>Shirt Number</th>
+            <th>Nationality</th>
+            <th>Club</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var player in Model)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(player.ProfilePicturePath))
+                    {
+                        <!-- Exibe a foto do jogador -->
+                        <img src="@Url.Content(player.ProfilePicturePath)" alt="Player Photo" />
+                    }
+                    else
+                    {
+                        <span>No Photo</span>
+                    }
+                </td>
+                <td>@player.Id</td>
+                <td>@player.Name</td>
+                <td>@player.DateBirth.ToString("d")</td>
+                <td>@player.Position</td>
+                <td>@player.ShirtNum</td>
+                <td>@player.Nacionality</td>
+                <td>@player.ClubName</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@player.Id" class="edit-player-btn">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@player.Id" class="details-player-btn">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@player.Id" class="remove-player-btn">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

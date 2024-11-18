@@ -1,0 +1,54 @@
+﻿@model ProjectLigaNosWeb.Data.Entities.Games
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Games</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubHome.Name) 
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClubHome.Name) 
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubAway.Name) 
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClubAway.Name)  
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HomeGoals)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HomeGoals)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AwayGoals)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AwayGoals)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Localizacao)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Localizacao)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

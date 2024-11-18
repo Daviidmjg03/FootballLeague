@@ -1,0 +1,219 @@
+﻿@using System.IO;
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment WebHostEnvironment
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ProjectLigaNosWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway:500,800" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.syncfusion.com/ej2/20.3.0.47/material.css" rel="stylesheet" />
+
+
+    <link rel="stylesheet" href="~/css/site.css" />
+
+
+    <style>
+        body {
+            background-color: #e9ecef;
+        }
+
+        .navbar {
+            transition: background-color 0.5s ease;
+        }
+
+            .navbar:hover {
+                background-color: #f8f9fa;
+            }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+            padding-bottom: 5px;
+            font-weight: 500; 
+        }
+
+            .nav-link::after {
+                content: '';
+                display: block;
+                width: 0;
+                height: 2px;
+                background: #ff4500; 
+                transition: width 0.3s ease, background-color 0.3s ease;
+                position: absolute;
+                left: 50%;
+                bottom: 0;
+            }
+
+            .nav-link:hover::after,
+            .nav-link:focus::after {
+                width: 100%;
+                left: 0;
+            }
+
+            .nav-link:not(:hover)::after,
+            .nav-link:not(:focus)::after {
+                width: 0;
+            }
+
+        .navbar-nav .dropdown-toggle {
+            color: #000;
+            font-weight: 500; 
+        }
+
+            .navbar-nav .dropdown-toggle::after {
+                display: none; 
+            }
+
+        .navbar-nav .dropdown:hover .dropdown-toggle::after {
+            transform: none; 
+        }
+
+        .navbar-nav .dropdown-item {
+            color: #000;
+            font-weight: 500; 
+        }
+
+            .navbar-nav .dropdown-item:hover {
+                background-color: #f8f9fa; 
+            }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 10px 0;
+        }
+    </style>
+
+    <script src="https://cdn.syncfusion.com/ej2/20.3.0.47/dist/ej2.min.js"></script>
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProjetoFinalWebLigaNos</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fa-solid fa-house-user"></i> Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Clubs" asp-action="Index">
+                                <i class="fa-solid fa-futbol"></i> Clubs
+                            </a>
+                        </li>
+                        @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-user-tie"></i>Admin</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="">Users</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="">Roles</a></li>
+                                </ul>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Players" asp-action="Index">
+                                <i class="fa-solid fa-person"></i>Players
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Games" asp-action="Index">
+                                <i class="fa-solid fa-users"></i>Games
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Statistics" asp-action="Index">
+                                <i class="fa-solid fa-ranking-star"></i> Statistics
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                <i class="fa-solid fa-lock"></i> Privacy
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangeUser">
+                                    @{
+                                        var profilePicturePath = "~/images/users/" + User.Identity.Name + ".png";
+                                        var filePath = System.IO.Path.Combine(WebHostEnvironment.WebRootPath, "images/users", User.Identity.Name + ".png");
+
+                                        if (!System.IO.File.Exists(filePath))
+                                        {
+                                            profilePicturePath = "~/images/users/default.png";
+                                        }
+                                        else
+                                        {
+                                            profilePicturePath += "?t=" + DateTime.Now.Ticks;
+                                        }
+
+                                        profilePicturePath = Url.Content(profilePicturePath);
+                                    }
+                                    <img src="@profilePicturePath" alt="Profile Picture"
+                                         style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;" />
+                                    @this.User.Identity.Name
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">
+                                    <i class="fa-solid fa-right-from-bracket"></i>Logout
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">
+                                    <i class="fa-solid fa-door-open"></i>Login
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - ProjectLigaNosWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+            <div class="social-icons">
+                <a href="https://www.facebook.com/profile.php?id=100006994865135&locale=pt_PT" target="_blank" class="text-dark">
+                    <i class="fa-brands fa-facebook"></i> Facebook
+                </a>
+                <a href="https://www.instagram.com/davidmjg10/" target="_blank" class="text-dark">
+                    <i class="fa-brands fa-instagram"></i> Instagram
+                </a>
+                <a href="https://www.linkedin.com/in/david-gon%C3%A7alves-3a12362ab/" target="_blank" class="text-dark">
+                    <i class="fa-brands fa-linkedin"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

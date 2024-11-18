@@ -1,0 +1,95 @@
+﻿@model IEnumerable<ProjectLigaNosWeb.Data.Entities.Statistics>
+
+@{
+    ViewData["Title"] = "Statistics";
+}
+
+<style>
+    .table {
+        width: 100%;
+        margin: 20px 0;
+        border-collapse: collapse;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+        .table thead {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .table th, .table td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        .table tbody tr {
+            background-color: #f9f9f9;
+            transition: background-color 0.3s ease;
+        }
+
+            .table tbody tr:hover {
+                background-color: #e0e0e0;
+            }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<h1>Statistics</h1>
+
+<div>
+    <a asp-controller="Pdf" asp-action="GeneratePdf" class="btn btn-primary mb-3">Gerar PDF</a>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Club</th>
+            <th>Game</th>
+            <th>Matches Played</th>
+            <th>Goals Scored</th>
+            <th>Goals Conceded</th>
+            <th>Home Wins</th>
+            <th>Away Wins</th>
+            <th>Overall Ranking</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            foreach (var stat in Model)
+            {
+                <tr>
+                    <td>@stat.Club?.Name</td>
+                    <td>@stat.Game?.Name</td>
+                    <td>@stat.MatchesPlayed</td>
+                    <td>@stat.GoalsScored</td>
+                    <td>@stat.GoalsConceded</td>
+                    <td>@stat.HomeWins</td>
+                    <td>@stat.AwayWins</td>
+                    <td>@stat.OverallRanking</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="8" class="text-center">No statistics available.</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ProjectLigaNosWeb.Data.Entities.Games>
+
+@{
+    ViewData["Title"] = "Game List";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<a asp-action="Create" class="btn btn-success mb-3">Create</a>
+
+<style>
+    .list-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .list-group-item {
+        flex: 1 1 calc(30% - 15px);
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+        .list-group-item h5 {
+            margin-bottom: 10px;
+        }
+
+    .btn-group {
+        margin-top: 10px;
+        display: flex;
+        gap: 5px;
+    }
+</style>
+
+@if (Model != null && Model.Any())
+{
+    <div class="list-group">
+        @foreach (var game in Model)
+        {
+            <div class="list-group-item">
+                <h5 class="mb-1">@game.Name</h5>
+                <p><strong>Date:</strong> @game.Data.ToString("dd/MM/yyyy")</p>
+                <p><strong>Home Club:</strong> @game.ClubHome?.Name</p>
+                <p><strong>Away Club:</strong> @game.ClubAway?.Name</p>
+                <p><strong>Home Goals:</strong> @game.HomeGoals</p>
+                <p><strong>Away Goals:</strong> @game.AwayGoals</p>
+                <p><strong>Location:</strong> @game.Localizacao</p>
+                <div class="btn-group" role="group">
+                    <a asp-action="Edit" asp-route-id="@game.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@game.Id" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No games found.</p>
+}

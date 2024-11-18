@@ -1,0 +1,63 @@
+﻿@model ProjectLigaNosWeb.Data.Entities.Statistics
+
+<h1>Create Statistics</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="ClubId" class="control-label"></label>
+        <select asp-for="ClubId" asp-items="@(new SelectList(ViewBag.Clubs, "Id", "Name"))" class="form-control"></select>
+        <span asp-validation-for="ClubId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GameId" class="control-label"></label>
+        <select asp-for="GameId" asp-items="@(new SelectList(ViewBag.Games, "Id", "Name"))" class="form-control"></select>
+        <span asp-validation-for="GameId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MatchesPlayed" class="control-label"></label>
+        <input asp-for="MatchesPlayed" class="form-control" />
+        <span asp-validation-for="MatchesPlayed" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GoalsScored" class="control-label"></label>
+        <input asp-for="GoalsScored" class="form-control" />
+        <span asp-validation-for="GoalsScored" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GoalsConceded" class="control-label"></label>
+        <input asp-for="GoalsConceded" class="form-control" />
+        <span asp-validation-for="GoalsConceded" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="HomeWins" class="control-label"></label>
+        <input asp-for="HomeWins" class="form-control" />
+        <span asp-validation-for="HomeWins" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AwayWins" class="control-label"></label>
+        <input asp-for="AwayWins" class="form-control" />
+        <span asp-validation-for="AwayWins" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="OverallRanking" class="control-label"></label>
+        <input asp-for="OverallRanking" class="control-label" />
+        <span asp-validation-for="OverallRanking" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

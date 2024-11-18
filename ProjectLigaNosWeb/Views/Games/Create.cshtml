@@ -1,0 +1,57 @@
+﻿@model ProjectLigaNosWeb.Models.GameViewModel
+
+<h1>Create Game</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div> 
+
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Data" class="control-label"></label>
+        <input asp-for="Data" class="form-control" type="date" />
+        <span asp-validation-for="Data" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ClubHomeId" class="control-label"></label>
+        <select asp-for="ClubHomeId" asp-items="Model.ClubsHome" class="form-control"></select>
+        <span asp-validation-for="ClubHomeId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ClubAwayId" class="control-label"></label>
+        <select asp-for="ClubAwayId" asp-items="Model.ClubsAway" class="form-control"></select>
+        <span asp-validation-for="ClubAwayId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="HomeGoals" class="control-label"></label>
+        <input asp-for="HomeGoals" class="form-control" />
+        <span asp-validation-for="HomeGoals" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AwayGoals" class="control-label"></label>
+        <input asp-for="AwayGoals" class="form-control" />
+        <span asp-validation-for="AwayGoals" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Localizacao" class="control-label"></label>
+        <input asp-for="Localizacao" class="form-control" />
+        <span asp-validation-for="Localizacao" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
